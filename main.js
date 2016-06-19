@@ -1,3 +1,5 @@
+// A simple AJAX library
+
 function AR2() {
   if (window.ActiveXObject) {
     try {
@@ -7,15 +9,6 @@ function AR2() {
     }
   } else {
     this.request = new XMLHttpRequest();
-  }
-}
-
-AR2.prototype.onSuccess = function(successCallback) {
-  var request = this.request;
-  request.onreadystatechange = function() {
-    if (request.readyState === 4) {
-      successCallback(request.responseText);
-    }
   }
 }
 
@@ -32,6 +25,17 @@ AR2.prototype._setHeaders = function(method, payload, MIMEtype) {
   this.payload = payload;
   this.MIMEtype = MIMEtype;
 };
+
+
+AR2.prototype.onSuccess = function(successCallback) {
+  var request = this.request;
+  request.onreadystatechange = function() {
+    if (request.readyState === 4) {
+      successCallback(request.responseText);
+    }
+  }
+  return this;
+}
 
 AR2.prototype.post = function(payload, MIMEtype) {
   this._setHeaders('POST', payload, MIMEtype);
